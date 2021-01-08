@@ -12,12 +12,12 @@ exports[`AddItemForm component renders the complete form 1`] = `
       className="field"
     >
       <label
-        htmlFor="folder-name-input"
+        htmlFor="folder-name"
       >
         Name
       </label>
       <input
-        id="folder-name-input"
+        id="folder-name"
         type="text"
       />
     </div>

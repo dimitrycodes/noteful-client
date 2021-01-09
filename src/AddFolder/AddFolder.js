@@ -30,8 +30,8 @@ export default class AddFolder extends Component {
         return res.json();
       })
       .then((folder) => {
-        this.context.addFolder(folder);
         this.props.history.push(`/folder/${folder.id}`);
+        window.location.reload();
       })
       .catch((error) => {
         console.error({ error });

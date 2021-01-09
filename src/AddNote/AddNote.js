@@ -32,8 +32,8 @@ export default class AddNote extends Component {
         return res.json();
       })
       .then((note) => {
-        this.context.addNote(note);
         this.props.history.push(`/folder/${note.folderId}`);
+        window.location.reload();
       })
       .catch((error) => {
         console.error({ error });

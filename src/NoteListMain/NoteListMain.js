@@ -1,36 +1,53 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Note from '../Note/Note'
-import CircleButton from '../CircleButton/CircleButton'
-import ApiContext from '../ApiContext'
-import { getNotesForFolder } from '../notes-helpers'
-import './NoteListMain.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Note from '../Note/Note';
+import CircleButton from '../CircleButton/CircleButton';
+import ApiContext from '../ApiContext';
+import { getNotesForFolder } from '../notes-helpers';
+import './NoteListMain.css';
 
 export default class NoteListMain extends React.Component {
+  state = {
+    notes: [],
+  };
   static defaultProps = {
     match: {
-      params: {}
+      params: {},
+    },
+  };
+  static contextType = ApiContext;
+
+  componentDidUpdate(prevProps, prevState) {
+    const { notes } = this.context;
+    if (notes !== this.state.notes) {
+      this.setState({ notes });
     }
   }
-  static contextType = ApiContext
+
+  onDeleteNote(noteId) {
+    this.setState({
+      notes: this.state.notes.filter((note) => note.id !== noteId),
+    });
+  }
 
   render() {
-    const { folderId } = this.props.match.params
-    const { notes=[] } = this.context
-    const notesForFolder = getNotesForFolder(notes, folderId)
+    const { folderId } = this.props.match.params;
+    const { notes } = this.state;
+    const notesForFolder = getNotesForFolder(notes, folderId);
     return (
       <section className='NoteListMain'>
         <ul>
-          {notesForFolder.map(note =>
+          {notesForFolder.map((note) => (
             <li key={note.id}>
               <Note
                 id={note.id}
                 name={note.name}
                 modified={note.modified}
+                onDeleteNote={this.onDeleteNote}
               />
             </li>
-          )}
+          ))}
         </ul>
         <div className='NoteListMain__button-container'>
           <CircleButton
@@ -45,6 +62,6 @@ export default class NoteListMain extends React.Component {
           </CircleButton>
         </div>
       </section>
-    )
+    );
   }
 }

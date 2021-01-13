@@ -6,6 +6,10 @@ import config from '../config';
 import './AddFolder.css';
 
 export default class AddFolder extends Component {
+  state = {
+    validFolder: false,
+  };
+
   static defaultProps = {
     history: {
       push: () => {},
@@ -15,27 +19,35 @@ export default class AddFolder extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const folder = {
-      name: e.target['folder_name'].value,
-    };
-    fetch(`${config.API_ENDPOINT}/folders`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(folder),
-    })
-      .then((res) => {
-        if (!res.ok) return res.json().then((e) => Promise.reject(e));
-        return res.json();
+    const name = e.target['folder_name'].value;
+    if (!name) {
+      this.setState({ validFolder: true });
+    } else {
+      const folder = {
+        name
+      }
+      console.log('object', folder);
+      this.setState({ validFolder: false });
+
+      fetch(`${config.API_ENDPOINT}/folders`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(folder),
       })
-      .then((folder) => {
-        this.props.history.push(`/folder/${folder.id}`);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error({ error });
-      });
+        .then((res) => {
+          if (!res.ok) return res.json().then((e) => Promise.reject(e));
+          return res.json();
+        })
+        .then((folder) => {
+          this.props.history.push(`/folder/${folder.id}`);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+    }
   };
 
   render() {
@@ -46,6 +58,9 @@ export default class AddFolder extends Component {
           <div className='field'>
             <label htmlFor='folder-name'>Name</label>
             <input type='text' id='folder-name' name='folder_name' />
+            {this.state.validFolder && (
+              <p style={{ color: 'red' }}>Empty folder name don't accept</p>
+            )}
           </div>
           <div className='buttons'>
             <button type='submit'>Add folder</button>

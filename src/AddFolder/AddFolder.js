@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import NotefulForm from '../NotefulForm/NotefulForm';
 import ApiContext from '../ApiContext';
 import config from '../config';
 
 import './AddFolder.css';
 
-export default class AddFolder extends Component {
+class AddFolder extends Component {
   state = {
     validFolder: false,
   };
@@ -24,8 +25,8 @@ export default class AddFolder extends Component {
       this.setState({ validFolder: true });
     } else {
       const folder = {
-        name
-      }
+        name,
+      };
       console.log('object', folder);
       this.setState({ validFolder: false });
 
@@ -70,3 +71,9 @@ export default class AddFolder extends Component {
     );
   }
 }
+
+AddFolder.propTypes = {
+  history: PropTypes.object,
+};
+
+export default AddFolder;

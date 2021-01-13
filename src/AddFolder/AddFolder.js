@@ -42,7 +42,7 @@ class AddFolder extends Component {
           return res.json();
         })
         .then((folder) => {
-          this.props.history.push(`/folder/${folder.id}`);
+          this.props.history.push(`/`);
           window.location.reload();
         })
         .catch((error) => {

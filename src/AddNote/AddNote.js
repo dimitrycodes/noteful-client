@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import NotefulForm from '../NotefulForm/NotefulForm';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './AddNote.css';
 
-export default class AddNote extends Component {
+class AddNote extends Component {
   state = {
     validName: false,
     validContent: false,
@@ -108,3 +109,9 @@ export default class AddNote extends Component {
     );
   }
 }
+
+AddNote.propTypes = {
+  history: PropTypes.object,
+};
+
+export default AddNote;

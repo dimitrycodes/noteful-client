@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NotefulForm from '../NotefulForm/NotefulForm';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ApiContext from '../ApiContext';
 import config from '../config';
 import './AddNote.css';
@@ -72,39 +73,41 @@ class AddNote extends Component {
     return (
       <section className='AddNote'>
         <h2>Create a note</h2>
-        <NotefulForm onSubmit={this.handleSubmit}>
-          <div className='field'>
-            <label htmlFor='note-name'>Name</label>
-            <input type='text' id='note-name' name='note_name' />
-            {this.state.validName && (
-              <p style={{ color: 'red' }}>Name is required</p>
-            )}
-          </div>
-          <div className='field'>
-            <label htmlFor='note-content'>Content</label>
-            <textarea id='note-content' name='note_content' />
-            {this.state.validContent && (
-              <p style={{ color: 'red' }}>Content is required</p>
-            )}
-          </div>
-          <div className='field'>
-            <label htmlFor='note-folder-select'>Folder</label>
-            <select id='note-folder-select' name='note-folder-id'>
-              <option value=''>Select Folder</option>
-              {folders.map((folder) => (
-                <option key={folder.id} value={folder.id}>
-                  {folder.name}
-                </option>
-              ))}
-            </select>
-            {this.state.validFolder && (
-              <p style={{ color: 'red' }}>Folder is required</p>
-            )}
-          </div>
-          <div className='buttons'>
-            <button type='submit'>Add note</button>
-          </div>
-        </NotefulForm>
+        <ErrorBoundary>
+          <NotefulForm onSubmit={this.handleSubmit}>
+            <div className='field'>
+              <label htmlFor='note-name'>Name</label>
+              <input type='text' id='note-name' name='note_name' />
+              {this.state.validName && (
+                <p style={{ color: 'red' }}>Name is required</p>
+              )}
+            </div>
+            <div className='field'>
+              <label htmlFor='note-content'>Content</label>
+              <textarea id='note-content' name='note_content' />
+              {this.state.validContent && (
+                <p style={{ color: 'red' }}>Content is required</p>
+              )}
+            </div>
+            <div className='field'>
+              <label htmlFor='note-folder-select'>Folder</label>
+              <select id='note-folder-select' name='note-folder-id'>
+                <option value=''>Select Folder</option>
+                {folders.map((folder) => (
+                  <option key={folder.id} value={folder.id}>
+                    {folder.name}
+                  </option>
+                ))}
+              </select>
+              {this.state.validFolder && (
+                <p style={{ color: 'red' }}>Folder is required</p>
+              )}
+            </div>
+            <div className='buttons'>
+              <button type='submit'>Add note</button>
+            </div>
+          </NotefulForm>
+        </ErrorBoundary>
       </section>
     );
   }

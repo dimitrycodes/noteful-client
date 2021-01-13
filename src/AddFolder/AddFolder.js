@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NotefulForm from '../NotefulForm/NotefulForm';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ApiContext from '../ApiContext';
 import config from '../config';
 
@@ -55,18 +56,20 @@ class AddFolder extends Component {
     return (
       <section className='AddFolder'>
         <h2>Create a folder</h2>
-        <NotefulForm onSubmit={this.handleSubmit}>
-          <div className='field'>
-            <label htmlFor='folder-name'>Name</label>
-            <input type='text' id='folder-name' name='folder_name' />
-            {this.state.validFolder && (
-              <p style={{ color: 'red' }}>Empty folder name don't accept</p>
-            )}
-          </div>
-          <div className='buttons'>
-            <button type='submit'>Add folder</button>
-          </div>
-        </NotefulForm>
+        <ErrorBoundary>
+          <NotefulForm onSubmit={this.handleSubmit}>
+            <div className='field'>
+              <label htmlFor='folder-name'>Name</label>
+              <input type='text' id='folder-name' name='folder_name' />
+              {this.state.validFolder && (
+                <p style={{ color: 'red' }}>Empty folder name don't accept</p>
+              )}
+            </div>
+            <div className='buttons'>
+              <button type='submit'>Add folder</button>
+            </div>
+          </NotefulForm>
+        </ErrorBoundary>
       </section>
     );
   }

@@ -65,3 +65,7 @@ export default class NoteListMain extends React.Component {
     );
   }
 }
+
+NoteListMain.propTypes = {
+  match: PropTypes.shape({params:PropTypes.shape({folderId:PropTypes.string.isRequired})})
+}

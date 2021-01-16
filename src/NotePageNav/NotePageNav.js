@@ -38,3 +38,8 @@ export default class NotePageNav extends React.Component {
     );
   }
 }
+
+NotePageNav.propTypes = {
+  match: PropTypes.shape({params:PropTypes.shape({noteId:PropTypes.string.isRequired})}),
+  history: PropTypes.shape({goBack:PropTypes.func.isRequired})
+}

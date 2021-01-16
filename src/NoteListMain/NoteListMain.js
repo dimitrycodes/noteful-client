@@ -6,6 +6,7 @@ import CircleButton from '../CircleButton/CircleButton';
 import ApiContext from '../ApiContext';
 import { getNotesForFolder } from '../notes-helpers';
 import './NoteListMain.css';
+import PropTypes from 'prop-types'
 
 export default class NoteListMain extends React.Component {
   state = {

@@ -60,7 +60,6 @@ class AddNote extends Component {
         })
         .then((note) => {
           this.props.history.push(`/folder/${note.folderId}`);
-          window.location.reload();
         })
         .catch((error) => {
           console.error({ error });

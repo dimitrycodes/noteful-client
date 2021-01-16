@@ -44,7 +44,6 @@ class AddFolder extends Component {
         })
         .then((folder) => {
           this.props.history.push(`/`);
-          window.location.reload();
         })
         .catch((error) => {
           console.error({ error });

@@ -19,6 +19,9 @@ class AddFolder extends Component {
   };
   static contextType = ApiContext;
 
+  //handleAddFolder method similar to the one in Note 
+  //
+
   handleSubmit = (e) => {
     e.preventDefault();
     const name = e.target['folder_name'].value;
@@ -43,6 +46,7 @@ class AddFolder extends Component {
           return res.json();
         })
         .then((folder) => {
+          this.context.addFolder(folder)
           this.props.history.push(`/`);
         })
         .catch((error) => {

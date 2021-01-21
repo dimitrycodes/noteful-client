@@ -36,13 +36,27 @@ class App extends Component {
         console.error({ error });
       });
   }
-
   handleDeleteNote = (noteId) => {
     this.setState({
       notes: this.state.notes.filter((note) => note.id !== noteId),
     });
   };
 
+  handleAddNote = (newNote) => {
+    console.log(newNote)
+    const newNotes = [...this.state.notes, newNote]
+    console.log(newNotes)
+    this.setState({
+      notes: newNotes
+    })
+  }
+
+  handleAddFolder = (newFolder) => {
+    const newFolders = [...this.state.folders, newFolder]
+    this.setState({
+      folders: newFolders
+    })
+  }
   renderNavRoutes() {
     return (
       <>
@@ -74,6 +88,8 @@ class App extends Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.handleDeleteNote,
+      addNote: this.handleAddNote,
+      addFolder: this.handleAddFolder
     };
     return (
       <ApiContext.Provider value={value}>

@@ -9,9 +9,6 @@ import './NoteListMain.css';
 import PropTypes from 'prop-types'
 
 export default class NoteListMain extends React.Component {
-  state = {
-    notes: [],
-  };
   static defaultProps = {
     match: {
       params: {},
@@ -19,22 +16,14 @@ export default class NoteListMain extends React.Component {
   };
   static contextType = ApiContext;
 
-  componentDidUpdate(prevProps, prevState) {
-    const { notes } = this.context;
-    if (notes !== this.state.notes) {
-      this.setState({ notes });
-    }
-  }
-
   onDeleteNote(noteId) {
-    this.setState({
-      notes: this.state.notes.filter((note) => note.id !== noteId),
-    });
+    this.context.deleteNote(noteId)
   }
 
   render() {
     const { folderId } = this.props.match.params;
-    const { notes } = this.state;
+    console.log(this.context);
+    const { notes } = this.context;
     const notesForFolder = getNotesForFolder(notes, folderId);
     return (
       <section className='NoteListMain'>

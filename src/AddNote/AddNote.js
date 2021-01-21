@@ -23,12 +23,13 @@ class AddNote extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const newNote = {
-      title: e.target['note_name'].value,
+      name: e.target['note_name'].value,
       content: e.target['note_content'].value,
       folderId: e.target['note-folder-id'].value,
       modified: new Date(),
+      title: e.target['note_name'].value,
     };
-    if (!newNote.title) {
+    if (!newNote.name) {
       this.setState({ validName: true });
     } else {
       this.setState({ validName: false });
@@ -46,7 +47,7 @@ class AddNote extends Component {
       this.setState({ validFolder: false });
     }
 
-    if (newNote.title && newNote.content && newNote.folderId) {
+    if (newNote.name && newNote.content && newNote.folderId) {
       fetch(`${config.API_ENDPOINT}/notes`, {
         method: 'POST',
         headers: {
@@ -59,6 +60,7 @@ class AddNote extends Component {
           return res.json();
         })
         .then((note) => {
+          this.context.addNote(newNote)
           this.props.history.push(`/folder/${note.folderId}`);
         })
         .catch((error) => {
